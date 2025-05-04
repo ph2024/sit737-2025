@@ -1,5 +1,4 @@
 // basically, a switch function was used identify and reroute to the associated endpoint for each calculator. Thus, the code is essentially duplicated for each calculator function so each endpoint performs independently
-
 // as is now standard, the following 6 lines creates server through node.js and establish the port
 const express = require('express');
 const app = express();
@@ -228,8 +227,6 @@ routerMult.get('/mult', function (req, res) {
         }
         // logs event of successfully entered parameters
         logger.info('Parameters '+ num1 +' and ' + num2 + ' received for calculation.');
-
-        // function to identify and execute desired function, imported from functions.js
 
     if (fn !== "mult") {
         switch (fn) {
