@@ -1,0 +1,5 @@
+{"level":"error","message":"num1 is incorrectly defined.","service":"calculation"}
+{"level":"error","message":"error","service":"calculation"}
+{"level":"info","message":"Function mult received for calculation.","service":"calculation"}
+{"level":"info","message":"Function mult received for calculation.","service":"calculation"}
+{"level":"info","message":"Parameters 2 and 4 received for calculation.","service":"calculation"}

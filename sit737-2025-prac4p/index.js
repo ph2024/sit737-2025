@@ -138,7 +138,7 @@ routerAdd.get('/add', function (req, res) {
         }
     // reports and logs results of executed function
         var result = functions.add(num1, num2);
-        res.json({statuscode:200, "function": fn, "num1": num1, "num2": num2, "result": result });  
+        res.json({statuscode:200, "function": fn, "num1": num1, "num2": num2, "result": results });  
         logger.info('Function '+ fn + ' received for calculation.');
 
     } catch(error) {
