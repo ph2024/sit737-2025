@@ -18,7 +18,8 @@ const routerMult = express.Router({ mergeParams: true });
 const routerDiv = express.Router({ mergeParams: true });
 const routerExp = express.Router({ mergeParams: true });
 const routerSqrt = express.Router({ mergeParams: true });
-const routerMod = express.Router({ mergeParams: true });;
+const routerMod = express.Router({ mergeParams: true });
+const routerAvg = express.Router({ mergeParams: true });
 
 //establishes the logging function for events and errors
 const winston = require('winston');
@@ -78,7 +79,7 @@ app.get("/", (req,res)=>{
             throw new Error("Function is incorrectly defined: " + fn);
         } else {
             logger.info('Function '+ fn + ' received for calculation.');
-            return res.redirect('' + fn + '/?num1=' + num1 + '&num2=' + num2 + '=&fn=' + fn);;
+            return res.redirect('' + fn + '/?num1=' + num1 + '&num2=' + num2 + '&fn=' + fn);;
         }
 
     } catch(error) {
@@ -115,7 +116,7 @@ routerAdd.get('/add', function (req, res) {
             logger.error("Function is incorrectly defined: " + fn);
             throw new Error("Function is incorrectly defined: " + fn);
         } else if (fn !== "add") {
-            return res.redirect('../' + fn + '/?num1=' + num1 + '&num2=' + num2 + '=&fn=' + fn);
+            return res.redirect('../' + fn + '/?num1=' + num1 + '&num2=' + num2 + '&fn=' + fn);
         } else {
             logger.info('Function '+ fn + ' received for calculation.');
         }
@@ -159,7 +160,7 @@ routerSub.get('/sub', function (req, res) {
             logger.error("Function is incorrectly defined: " + fn);
             throw new Error("Function is incorrectly defined: " + fn);
         } else if (fn !== "sub") {
-            return res.redirect('../' + fn + '/?num1=' + num1 + '&num2=' + num2 + '=&fn=' + fn);
+            return res.redirect('../' + fn + '/?num1=' + num1 + '&num2=' + num2 + '&fn=' + fn);
         } else {
             logger.info('Function  '+ fn + ' received for calculation.');
         }
@@ -203,7 +204,7 @@ routerMult.get('/mult', function (req, res) {
             logger.error("Function is incorrectly defined: " + fn);
             throw new Error("Function is incorrectly defined: " + fn);
         } else if (fn !== "mult") {
-            return res.redirect('../' + fn + '/?num1=' + num1 + '&num2=' + num2 + '=&fn=' + fn);
+            return res.redirect('../' + fn + '/?num1=' + num1 + '&num2=' + num2 + '&fn=' + fn);
         } else {
             logger.info('Function '+ fn + ' received for calculation.');
         }
@@ -247,7 +248,7 @@ routerDiv.get('/div', function (req, res) {
             logger.error("Function is incorrectly defined: " + fn);
             throw new Error("Function is incorrectly defined: " + fn);
         } else if (fn !== "div") {
-            return res.redirect('../' + fn + '/?num1=' + num1 + '&num2=' + num2 + '=&fn=' + fn);
+            return res.redirect('../' + fn + '/?num1=' + num1 + '&num2=' + num2 + '&fn=' + fn);
         } else {
             logger.info('Function  '+ fn + ' received for calculation.');
         }
@@ -291,7 +292,7 @@ routerExp.get('/exp', function (req, res) {
             logger.error("Function is incorrectly defined: " + fn);
             throw new Error("Function is incorrectly defined: " + fn);
         } else if (fn !== "exp") {
-            return res.redirect('../' + fn + '/?num1=' + num1 + '&num2=' + num2 + '=&fn=' + fn);
+            return res.redirect('../' + fn + '/?num1=' + num1 + '&num2=' + num2 + '&fn=' + fn);
         } else {
             logger.info('Function '+ fn + ' received for calculation.');
         }
@@ -335,7 +336,7 @@ routerSqrt.get('/sqrt', function (req, res) {
             logger.error("Function is incorrectly defined: " + fn);
             throw new Error("Function is incorrectly defined: " + fn);
         } else if (fn !== "sqrt") {
-            return res.redirect('../' + fn + '/?num1=' + num1 + '&num2=' + num2 + '=&fn=' + fn);
+            return res.redirect('../' + fn + '/?num1=' + num1 + '&num2=' + num2 + '&fn=' + fn);
         } else {
             logger.info('Function '+ fn + ' received for calculation.');
         }
@@ -379,7 +380,7 @@ routerMod.get('/mod', function (req, res) {
             logger.error("Function is incorrectly defined: " + fn);
             throw new Error("Function is incorrectly defined: " + fn);
         } else if (fn !== "mod") {
-            return res.redirect('../' + fn + '/?num1=' + num1 + '&num2=' + num2 + '=&fn=' + fn);
+            return res.redirect('../' + fn + '/?num1=' + num1 + '&num2=' + num2 + '&fn=' + fn);
         } else {
             logger.info('Function '+ fn + ' received for calculation.');
         }
@@ -395,6 +396,50 @@ routerMod.get('/mod', function (req, res) {
     }
 });
 
+// establishes the microservice API endpoint for the average function
+routerAvg.get('/avg', function (req, res) {
+    //sets up error checking method
+    try{
+        //prepares parameters for parsing from url
+        const num1 = parseFloat(req.query.num1);
+        const num2 = parseFloat(req.query.num2);
+        const fn =  (String(req.query.fn)).toLowerCase();
+
+        // error checking for number parameters
+        if(isNaN(num1)) {
+            logger.error("num1 is incorrectly defined.");
+            throw new Error("num1 incorrectly defined.");
+        }
+        if(isNaN(num2)) {
+            logger.error("num2 is incorrectly defined.");
+            throw new Error("num2 incorrectly defined.");
+        }
+        // error check for dividing number by 0
+        if (fn === 'div' & num2 === 0) {
+            logger.error("Invalid number for division; num2 cannot be 0.");
+            throw new Error("Invalid number for division; num2 cannot be 0.");
+        }
+        // check for valid function submission, either throwing an error if invalid, redirecting to appropriate api if different function is chosen
+        if (functions.list.includes(fn) === false) {
+            logger.error("Function is incorrectly defined: " + fn);
+            throw new Error("Function is incorrectly defined: " + fn);
+        } else if (fn !== "avg") {
+            return res.redirect('../' + fn + '/?num1=' + num1 + '&num2=' + num2 + '&fn=' + fn);
+        } else {
+            logger.info('Function '+ fn + ' received for calculation.');
+        }
+
+        // logs event of successfully entered parameters and result
+        logger.info('Parameters '+ num1 +' and ' + num2 + ' received for calculation.');
+        var result = functions.avg(num1, num2);
+        res.json({statuscode:200, "function": fn, "num1": num1, "num2": num2, "result": result });  
+
+    } catch(error) {
+        res.json({statuscode:500, msg: error.toString() });
+        logger.error("error");
+    }
+});
+
 app.use(routerAdd);
 app.use(routerSub);
 app.use(routerMult);
@@ -402,6 +447,7 @@ app.use(routerDiv);
 app.use(routerExp);
 app.use(routerSqrt);
 app.use(routerMod);
+app.use(routerAvg);
 
 app.listen(PORT, function (err) {
     if (err) console.log(err);

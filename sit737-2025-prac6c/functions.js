@@ -47,4 +47,10 @@ function mod (num1, num2) {
     return num1 % num2;
 }
 
-module.exports = { add, sub, mult, div, exp, sqrt, mod, list };
+// Average function
+list.push("avg")
+function avg (num1, num2) {
+    return ((num1 + num2) / 2);
+}
+
+module.exports = { add, sub, mult, div, exp, sqrt, mod, avg, list };

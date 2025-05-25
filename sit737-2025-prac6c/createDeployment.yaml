@@ -21,6 +21,6 @@ spec:
     spec:
       containers:
       - name: calculatornode
-        image: ph2024/sit737-2025-prac6c:1
+        image: ph2024/sit737-2025-prac6c:latest
         ports:
         - containerPort: 3000
