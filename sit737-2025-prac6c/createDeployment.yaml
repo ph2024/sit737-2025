@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: calculatordeployment
+  labels:
+# to be referenced by Services
+    app: calculatorapp
+    tier: frontend
+spec:
+  # modify replicas according to your case
+  replicas: 3
+  selector:
+    matchLabels:
+      app: calculatorapp
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: calculatorapp
+        tier: frontend
+    spec:
+      containers:
+      - name: calculatornode
+        image: ph2024/sit737-2025-prac6c:1
+        ports:
+        - containerPort: 3000
