@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: calculator-deployment
+  labels:
+# to be referenced by Services
+    app: calculator-app
+    tier: frontend
+spec:
+  # modify replicas according to your case
+  replicas: 1
+  selector:
+    matchLabels:
+      app: calculator-app
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: calculator-app
+        tier: frontend
+    spec:
+      containers:
+# not sure this name should be ~. should it be -app?
+      - name: calculatornode
+        image: sit737-2025-prac7p
+# similarly, not sure of port is needed, given headless~
+        ports:
+        - containerPort: 3000

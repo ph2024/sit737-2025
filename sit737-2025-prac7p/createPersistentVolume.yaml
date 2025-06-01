@@ -8,7 +8,7 @@ spec:
   accessModes:
     - ReadWriteMany
   local:
-    path: /run/desktop/mnt/host/c/sit323_737-2023-t1-prac2p/Week6/MyMappedFolder
+    path: /sit737-2025-prac7p/ # moot path
   nodeAffinity:
     required:
       nodeSelectorTerms:

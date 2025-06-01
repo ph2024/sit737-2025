@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: calculatorpod
+  labels:
+    run: calculatorpod
+spec:
+  containers:
+  - image: sit737-2025-prac7p:latest
+    name: calculatorapp
+    ports:
+    - containerPort: 3000
+  dnsPolicy: ClusterFirst
+  restartPolicy: Always
+  
+
